@@ -60,6 +60,6 @@ class CoronaDataMapper {
         int latestCases = Integer.parseInt(record.get(record.size() - 2));
         int todaysCases = Integer.parseInt(record.get(record.size() - 1));
 
-        return new Province(province, todaysCases, latestCases);
+        return new Province(province, todaysCases, todaysCases - latestCases);
     }
 }
