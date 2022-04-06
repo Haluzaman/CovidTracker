@@ -34,6 +34,7 @@ public class CoronaVirusDataService {
 
     //8 o'clock everyday
     @Scheduled(cron = "0 0 8 * * *")
+//    @PostConstruct
     public void fetchAndSaveData() {
         List<LocationStats> stats = fetchData();
         this.mongoCoronaDataRepository.saveAll(stats);

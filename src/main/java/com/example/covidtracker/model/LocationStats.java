@@ -19,10 +19,23 @@ public class LocationStats {
 
     @Id
     private String country;
+
+    private int actualCases;
+
+    private int changesSinceLastDay;
+
     private List<Province> provinces = new LinkedList<>();
 
     public void addProvince(Province p) {
         this.provinces.add(p);
+    }
+
+    public void addActualCases(int numCases) {
+        this.actualCases += numCases;
+    }
+
+    public void addChangesSinceLastDay(int numCases) {
+        this.changesSinceLastDay += numCases;
     }
 
 }

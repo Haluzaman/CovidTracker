@@ -24,15 +24,27 @@ class CoronaDataMapper {
         for (CSVRecord record : this.records) {
             String country = record.get("Country/Region");
             Province p = parseProvince(record);
-            if (!StringUtils.isEmpty(country)) {
-                if (countries.containsKey(country)) {
-                    LocationStats currLocation = countries.get(country);
+
+            //there is only one province in the Country
+            if (StringUtils.isEmpty(p.getName())) {
+                LocationStats l = new LocationStats();
+                l.setCountry(country);
+                l.setActualCases(p.getLatestToday());
+                l.setChangesSinceLastDay(p.getDiffFromPreviousDay());
+                countries.put(country, l);
+            } else {
+                LocationStats currLocation = countries.get(country);
+                if (currLocation != null) {
+                    currLocation.addActualCases(p.getLatestToday());
+                    currLocation.addChangesSinceLastDay(p.getDiffFromPreviousDay());
                     currLocation.addProvince(p);
                     countries.put(country, currLocation);
                 } else {
                     LocationStats l = new LocationStats();
                     l.setCountry(country);
                     l.addProvince(p);
+                    l.addActualCases(p.getLatestToday());
+                    l.addChangesSinceLastDay(p.getDiffFromPreviousDay());
                     countries.put(country, l);
                 }
             }
