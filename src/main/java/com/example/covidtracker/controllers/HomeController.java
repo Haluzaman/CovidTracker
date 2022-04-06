@@ -30,7 +30,7 @@ public class HomeController {
         if (!StringUtils.isEmpty(filterBy)) {
             stats = this.coronaDataRepository.getByFilter(filterBy);
         } else {
-            stats = this.coronaDataRepository.findAll();
+            stats = this.coronaDataRepository.findAllByOrderByCountry();
         }
 //        List<LocationStats> stats = this.coronaDataRepository.findAll();
         CoronaDataToRowMapper mapper = new CoronaDataToRowMapper(stats);

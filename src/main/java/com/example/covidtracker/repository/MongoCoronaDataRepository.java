@@ -14,6 +14,8 @@ public interface MongoCoronaDataRepository extends MongoRepository<LocationStats
 
     LocationStats findByCountry(String country);
 
+    List<LocationStats> findAllByOrderByCountry();
+
     @Query(value = "{country: /?0/}", sort = "{country:1}")
     List<LocationStats> getByFilter(String filterBy);
 
