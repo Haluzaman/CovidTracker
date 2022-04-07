@@ -42,13 +42,13 @@
             <th></th>
         </tr>
         <tr th:each="currentStat : ${coronaDataRow}" th:classappend="${currentStat.getStyleClass()}">
-                <td th:text="${currentStat.getCountry()}"></td>
+                <td th:text="${currentStat.getStyleClass() eq 'table-secondary' ? currentStat.getCountry() : ''}"></td>
                 <td th:text="${currentStat.getState()}"></td>
                 <td th:text="${currentStat.getActualCases()}"></td>
                 <td th:text="${currentStat.getChangesSinceLastDay()}"></td>
                 <td>
                     <a title="Show info"
-                       th:href="@{/detail(country=${currentStat.getCountry()},state=${currentStat.getState()})}">
+                       th:href="@{/detail(country=${currentStat.getCountry()},province=${currentStat.getState()})}">
                         <i class="bi bi-info-circle"></i>
                     </a>
                 </td>

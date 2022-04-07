@@ -61,15 +61,15 @@ public class CoronaDataToRowMapper {
         rows.add(row);
 
         if (!CollectionUtils.isEmpty(stat.getProvinces())) {
-            rows.addAll(stat.getProvinces().stream().map(this::convertProvinceToRow).collect(Collectors.toList()));
+            rows.addAll(stat.getProvinces().stream().map(p -> this.convertProvinceToRow(p, stat.getCountry())).collect(Collectors.toList()));
         }
 
         return rows;
     }
 
-    private CoronaDataRow convertProvinceToRow(Province p) {
+    private CoronaDataRow convertProvinceToRow(Province p, String country) {
         CoronaDataRow r = new CoronaDataRow();
-        r.setCountry("");
+        r.setCountry(country);
         r.setActualCases(p.getLatestToday());
         r.setChangesSinceLastDay(p.getDiffFromPreviousDay());
         r.setState(p.getName());

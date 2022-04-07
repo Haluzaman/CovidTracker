@@ -1,13 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="ISO-8859-1">
+    <title>Google Charts Example - Spring Boot</title>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
-    <a title="Show info"
-        th:href="@{/}">
+<div align="center" style="width: 1000px;">
+    <h2 th:text="${region}"></h2>
+    <a title="Show info" th:href="@{/}">
         Return home
     </a>
+    <div id="chart_div"></div>
+    <div id="piechart" style="width: 1200px; height: 900px;"></div>
+</div>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        google.charts.load('current', {
+            packages : [ 'corechart', 'bar' ]
+        });
+        google.charts.setOnLoadCallback(drawLineChart);
+    });
+    function drawLineChart() {
+        const d = [[${chartData}]];
+        const data = new google.visualization.DataTable();
+        data.addColumn('string', 'Date');
+        data.addColumn('number', 'Num. Cases');
+        d.forEach(i => data.addRow( [ i[0], i[1] ] ));
+        const options = {
+            title : 'Number of corona virus cases',
+            hAxis : {
+                title : 'Date',
+            },
+            vAxis : {
+                title : 'Num. Cases'
+            }
+        };
+        const chart = new google.visualization.LineChart(document
+            .getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
 </body>
 </html>

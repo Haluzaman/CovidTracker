@@ -12,6 +12,9 @@ public class CovidTrackerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CovidTrackerApplication.class, args);
+        System.out.println("***************************************\n");
+        System.out.println("http://localhost:8080/");
+        System.out.println("***************************************\n");
     }
 
 }
