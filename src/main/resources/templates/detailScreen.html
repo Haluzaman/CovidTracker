@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Google Charts Example - Spring Boot</title>
+    <title>Corona Virus cases</title>
     <script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet"
@@ -17,7 +17,23 @@
         Return home
     </a>
     <div id="chart_div"></div>
-    <div id="piechart" style="width: 1200px; height: 900px;"></div>
+    <div id="piechart" style="width: 1200px; height: 80px;"></div>
+</div>
+<div class="container">
+    <table class="table table-hover">
+        <tr class="table-dark">
+            <th>State</th>
+            <th>Country</th>
+            <th>Actual cases</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each="tableRow : ${tableData}">
+            <td th:text="${tableRow.getCountry()}"></td>
+            <td th:text="${tableRow.getProvince()}"></td>
+            <td th:text="${tableRow.getNumberOfCases()}"></td>
+            <td th:text="${tableRow.getDate()}"></td>
+        </tr>
+    </table>
 </div>
 <script th:inline="javascript">
     $(document).ready(function() {
