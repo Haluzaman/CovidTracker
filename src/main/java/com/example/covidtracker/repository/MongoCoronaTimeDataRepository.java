@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface MongoCoronaTimeDataRepository extends MongoRepository<CoronaTimeData, CoronaTimeDataId> {
@@ -22,5 +23,12 @@ public interface MongoCoronaTimeDataRepository extends MongoRepository<CoronaTim
             " '_id.province' : ?1 }",
             sort = "{ '_id.date' : -1 }")
     List<CoronaTimeData> findByFilter(String country, String province, Pageable page);
+
+    @Query(value = "{ " +
+            "'_id.country' : ?0," +
+            " '_id.province' : ?1," +
+            " '_id.date' : { $gte: ?2 } }",
+            sort = "{ '_id.date' : -1 }")
+    List<CoronaTimeData> findByFilter(String country, String province, LocalDate from, Pageable page);
 
 }

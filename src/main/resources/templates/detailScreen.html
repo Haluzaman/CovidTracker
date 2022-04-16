@@ -16,6 +16,17 @@
     <a title="Show info" th:href="@{/}">
         Return home
     </a>
+    <div>
+        <form th:action="@{/detail}" method="get" style="justify-content: center">
+            <p>Show info for:</p>
+            <input type="hidden" th:name="country" th:value="${currentCountry}"/>
+            <input type="hidden" th:name="province" th:value="${currentProvince}"/>
+            <select id="dropDownList" name="selectedRange">
+                <option th:each="option : ${dataRangeOptions}" th:value="${option.days}" th:text="${option.text}"></option>
+            </select>
+            <button type="submit">Show</button>
+        </form>
+    </div>
     <div id="chart_div"></div>
     <div id="piechart" style="width: 1200px; height: 80px;"></div>
 </div>
