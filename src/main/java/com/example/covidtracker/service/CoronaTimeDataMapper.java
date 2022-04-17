@@ -59,7 +59,7 @@ public class CoronaTimeDataMapper {
             timeData.addAll(timeDataByProvince);
         }
 
-        //Cases in states with provinces must be aggregated together
+        //Cases in states with provinces must be aggregated together to have stats for concrete state
         for (List<CoronaTimeData> data : timeDataStateMap.values()) {
             Map<String,Map<LocalDate,Integer>> map =
                     data.stream()
@@ -69,7 +69,6 @@ public class CoronaTimeDataMapper {
 
             var list = map.entrySet().stream().map(this::mapEntryToCoronaTimeDataList).flatMap(List::stream).collect(Collectors.toList());
             timeData.addAll(list);
-            System.out.println(list);
         }
 
         return timeData.stream()

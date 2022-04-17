@@ -26,7 +26,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, String filterBy) {
-        List<LocationStats> stats = null;
+        List<LocationStats> stats;
         if (!StringUtils.isEmpty(filterBy)) {
             stats = this.coronaDataRepository.getByFilter(filterBy);
         } else {
@@ -41,6 +41,7 @@ public class HomeController {
         model.addAttribute("coronaDataRow", rows);
         model.addAttribute("totalReportedCases", totalReportedCases);
         model.addAttribute("totalNewCases", totalNewCases);
+        model.addAttribute("filterBy", filterBy);
         return "home";
     }
 

@@ -26,7 +26,7 @@
     </div>
 
     <form th:action="@{/}" method="get">
-        <input id="txtSearch" type="filterBy" name="filterBy">
+        <input id="txtSearch" th:value="${filterBy}" th:name="filterBy">
         <button type="submit">Filter</button>
         <a title="Delete Filter"
            th:href="@{/}">

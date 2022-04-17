@@ -39,12 +39,13 @@ public class LocationDetailController {
                             @RequestParam(value = "selectedRange", required = false) String selectedRange
                             , Model model) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate date;
-        if (StringUtils.isEmpty(selectedRange) || "-1".equals(selectedRange)) {
-            date = LocalDate.of(1970,1,1);
-        } else {
-            date = LocalDate.now().minusDays(Long.parseLong(selectedRange));
+        //default value if no selected range is selected
+        if (StringUtils.isEmpty(selectedRange)) {
+            selectedRange = String.valueOf(365 * 30);
         }
+
+        LocalDate date = LocalDate.now().minusDays(Long.parseLong(selectedRange));
+
         List<CoronaTimeData> coronaTimeData = mongoCoronaTimeDataRepository.findByFilter(country, province, date ,PageRequest.of(0,100));
 
         DetailTableRowMapper mapper = new DetailTableRowMapper(coronaTimeData);
@@ -61,7 +62,7 @@ public class LocationDetailController {
         }
 
         List<DataRangeOption> options = new LinkedList<>();
-        options.add(new DataRangeOption("All time", -1));
+        options.add(new DataRangeOption("All time", 365*30));
         options.add(new DataRangeOption("last week", 7));
         options.add(new DataRangeOption("last month", 30));
         options.add(new DataRangeOption("last 2 months", 60));
